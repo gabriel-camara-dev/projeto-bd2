@@ -1,14 +1,16 @@
 services:
   postgres:
-    image: postgres:17
-    container_name: streamer-db
-    restart: unless-stopped
+    image: postgres:15
+    container_name: streamers_bd
+
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: streamer_db
+      POSTGRES_USER: streamer_user
+      POSTGRES_PASSWORD: streamer_pass
+      POSTGRES_DB: streamers_db
+
     ports:
       - "5432:5432"
+
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./sql:/docker-entrypoint-initdb.d

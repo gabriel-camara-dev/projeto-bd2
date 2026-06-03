@@ -1,0 +1,13 @@
+\i /docker-entrypoint-initdb.d/seeds/insert_base.sql
+\i /docker-entrypoint-initdb.d/seeds/insert_usuarios.sql
+\i /docker-entrypoint-initdb.d/seeds/insert_streamerpais.sql
+\i /docker-entrypoint-initdb.d/seeds/insert_plataformas.sql
+\i /docker-entrypoint-initdb.d/seeds/insert_canais.sql
+\i /docker-entrypoint-initdb.d/seeds/insert_niveis_canais.sql
+\i /docker-entrypoint-initdb.d/seeds/insert_inscricoes_patrocinios.sql
+\i /docker-entrypoint-initdb.d/seeds/insert_videos.sql
+\i /docker-entrypoint-initdb.d/seeds/insert_participa.sql
+\i /docker-entrypoint-initdb.d/seeds/insert_comentarios.sql
+\i /docker-entrypoint-initdb.d/seeds/insert_doacoes.sql
+\i /docker-entrypoint-initdb.d/seeds/update_counts.sql
+\i /docker-entrypoint-initdb.d/seeds/verify_counts.sql
