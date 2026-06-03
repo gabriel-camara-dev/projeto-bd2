@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS Doacao CASCADE;
 DROP TABLE IF EXISTS Comentario CASCADE;
 DROP TABLE IF EXISTS Participa CASCADE;
 DROP TABLE IF EXISTS Video CASCADE;
-DROP TABLE IF EXISTS Inscrição CASCADE;
+DROP TABLE IF EXISTS Inscricao CASCADE;
 DROP TABLE IF EXISTS NivelCanal CASCADE;
 DROP TABLE IF EXISTS Patrocinio CASCADE;
 DROP TABLE IF EXISTS Canal CASCADE;
@@ -98,6 +98,7 @@ CREATE TABLE Canal (
     descricao TEXT,
     qtd_visualizacoes INT DEFAULT 0 NOT NULL,
     nick_streamer VARCHAR(50) NOT NULL,
+    qtd_videos INT DEFAULT 0 NOT NULL,
     CONSTRAINT uk_canal_plataforma UNIQUE (nome, nro_plataforma),
     CONSTRAINT fk_canal_plataforma FOREIGN KEY (nro_plataforma) REFERENCES Plataforma(nro) ON DELETE RESTRICT,
     CONSTRAINT fk_canal_streamer FOREIGN KEY (nick_streamer) REFERENCES Usuario(nick) ON DELETE RESTRICT
@@ -121,7 +122,7 @@ CREATE TABLE NivelCanal (
     CONSTRAINT fk_nivel_canal FOREIGN KEY (id_canal) REFERENCES Canal(id_canal) ON DELETE CASCADE
 );
 
-CREATE TABLE Inscrição (
+CREATE TABLE Inscricao (
     id_canal INT NOT NULL,
     nick_membro VARCHAR(50) NOT NULL,
     nivel INT NOT NULL,
