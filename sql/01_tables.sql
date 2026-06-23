@@ -89,6 +89,7 @@ CREATE TABLE EmpresaPais (
     CONSTRAINT fk_empresa_pais_pais FOREIGN KEY (ddi_pais) REFERENCES Pais(DDI) ON DELETE RESTRICT
 );
 
+-- qtd_videos não está listada no relacional, mas está no enunciado
 CREATE TABLE Canal (
     id_canal INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     nome VARCHAR(150) NOT NULL,
