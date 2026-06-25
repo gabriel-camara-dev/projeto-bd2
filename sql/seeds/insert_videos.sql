@@ -1,8 +1,9 @@
+-- Dez videos para cada um dos 100 primeiros canais.
 INSERT INTO Video (id_canal, titulo, dataH, tema, duracao, visu_simul, visu_total)
 SELECT
     c.id_canal,
     'Video_' || seq || '_' || LEFT(c.nome, 20),
-    CURRENT_TIMESTAMP - (seq * INTERVAL '1 hour') - (CAST(FLOOR(RANDOM() * 30) AS INT) * INTERVAL '1 day'),
+    TIMESTAMP '2024-01-01 12:00:00' + (c.id_canal * INTERVAL '1 day') + (seq * INTERVAL '1 hour'),
     CASE (seq % 10)
         WHEN 0 THEN 'Gameplay'
         WHEN 1 THEN 'Tutorial'
@@ -15,10 +16,9 @@ SELECT
         WHEN 8 THEN 'Casual'
         ELSE 'Highlights'
     END,
-    INTERVAL '1 hour' * (CAST(FLOOR(RANDOM() * 3 + 0.5) AS INT)) + 
-    INTERVAL '30 minutes' * CAST(FLOOR(RANDOM() * 2) AS INT),
-    CAST(FLOOR(RANDOM() * 50000) AS INT),
-    CAST(FLOOR(RANDOM() * 1000000) AS INT)
+    INTERVAL '30 minutes' + (seq * INTERVAL '10 minutes'),
+    1000 + (c.id_canal * 10) + seq,
+    10000 + (c.id_canal * 100) + (seq * 1000)
 FROM Canal c
-CROSS JOIN generate_series(1, 10) as seq
+CROSS JOIN generate_series(1, 10) AS seq
 WHERE c.id_canal <= 100;

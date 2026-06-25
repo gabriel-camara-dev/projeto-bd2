@@ -1,3 +1,4 @@
+-- Cada canal possui os cinco niveis de membro exigidos no enunciado.
 INSERT INTO NivelCanal (id_canal, nivel, valor, gif)
 SELECT
     c.id_canal,
@@ -11,5 +12,5 @@ SELECT
     END,
     'https://cdn.example.com/level_' || nivel.nivel || '_' || c.id_canal || '.gif'
 FROM Canal c
-CROSS JOIN (VALUES (1), (2), (3), (4), (5)) AS nivel(nivel)
+CROSS JOIN generate_series(1, 5) AS nivel(nivel)
 ON CONFLICT (id_canal, nivel) DO NOTHING;

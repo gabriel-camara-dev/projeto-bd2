@@ -1,3 +1,4 @@
+-- Plataformas de streaming usadas pelos canais.
 INSERT INTO Plataforma (nome, qtd_users, empresa_fund, empresa_respo, data_fund) VALUES
 ('Twitch', 15000000, 21, 21, '2011-06-06'),
 ('YouTube Gaming', 25000000, 22, 22, '2015-08-26'),
@@ -104,23 +105,18 @@ INSERT INTO Plataforma (nome, qtd_users, empresa_fund, empresa_respo, data_fund)
 ('Execulink', 70000, 99, 99, '2011-11-01'),
 ('Mornington', 50000, 100, 100, '2012-08-01');
 
+-- Associa dois usuarios a cada plataforma com numero de usuario deterministico.
+WITH usuarios AS (
+    SELECT
+        nick,
+        ROW_NUMBER() OVER (ORDER BY nick) AS rn
+    FROM Usuario
+)
 INSERT INTO PlataformaUsuario (nro_plataforma, nick_usuario, nro_usuario)
-SELECT 
+SELECT
     p.nro,
     u.nick,
-    CAST(FLOOR(RANDOM() * 1000000) AS INT)
+    (p.nro * 1000 + u.rn)::INT
 FROM Plataforma p
-CROSS JOIN LATERAL (
-    SELECT nick FROM Usuario ORDER BY RANDOM() LIMIT 2
-) u
-WHERE p.nro <= 50
-UNION ALL
-SELECT 
-    p.nro,
-    u.nick,
-    CAST(FLOOR(RANDOM() * 1000000) AS INT)
-FROM Plataforma p
-CROSS JOIN LATERAL (
-    SELECT nick FROM Usuario OFFSET 50 LIMIT 2
-) u
-WHERE p.nro > 50;
+JOIN usuarios u
+    ON u.rn IN (((p.nro - 1) % 100) + 1, (p.nro % 100) + 1);

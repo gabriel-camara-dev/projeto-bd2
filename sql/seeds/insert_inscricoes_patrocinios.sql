@@ -1,26 +1,43 @@
+-- Dois membros por canal nos 100 primeiros canais, sem inscrever o dono do canal.
+WITH usuarios AS (
+    SELECT
+        nick,
+        ROW_NUMBER() OVER (ORDER BY nick) AS rn
+    FROM Usuario
+),
+canais AS (
+    SELECT id_canal, nick_streamer
+    FROM Canal
+    ORDER BY id_canal
+    LIMIT 100
+)
 INSERT INTO Inscricao (id_canal, nick_membro, nivel)
-SELECT DISTINCT
+SELECT
     c.id_canal,
     u.nick,
-    (floor(random() * 5) + 1)::int
-FROM Canal c
+    ((c.id_canal + u.rn) % 5) + 1
+FROM canais c
 CROSS JOIN LATERAL (
-    SELECT nick FROM Usuario 
-    WHERE nick != c.nick_streamer 
-    ORDER BY random() 
+    SELECT nick, rn
+    FROM usuarios
+    WHERE nick <> c.nick_streamer
+    ORDER BY ((rn + c.id_canal) % 100)
     LIMIT 2
 ) u
-LIMIT 200
 ON CONFLICT (id_canal, nick_membro) DO NOTHING;
 
+-- Um patrocinador para os 150 primeiros canais.
 INSERT INTO Patrocinio (nro_empresa, id_canal, valor)
-SELECT DISTINCT
-    e.nro,
+SELECT
+    ((c.rn - 1) % 103) + 1,
     c.id_canal,
-    (floor(random() * 50000) + 1000)::int
-FROM Canal c
-CROSS JOIN LATERAL (
-    SELECT nro FROM Empresa ORDER BY random() LIMIT 1
-) e
-LIMIT 150
+    1000 + (c.rn * 300)
+FROM (
+    SELECT
+        id_canal,
+        ROW_NUMBER() OVER (ORDER BY id_canal) AS rn
+    FROM Canal
+    ORDER BY id_canal
+    LIMIT 150
+) c
 ON CONFLICT (nro_empresa, id_canal) DO NOTHING;

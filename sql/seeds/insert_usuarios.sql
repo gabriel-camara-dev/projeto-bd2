@@ -1,3 +1,4 @@
+-- Usuarios base do sistema; alguns deles tambem serao streamers.
 INSERT INTO Usuario (nick, email, data_nasc, telefone, end_postal, pais_residencia) VALUES
 ('gamer_pro_01', 'gamer1@email.com', '1995-03-15', '+5511999990001', 'Rua A, 123 - São Paulo, SP', 55),
 ('streamer_lendario', 'streamer2@email.com', '1992-07-22', '+5511999990002', 'Av B, 456 - Rio de Janeiro, RJ', 55),
@@ -100,33 +101,16 @@ INSERT INTO Usuario (nick, email, data_nasc, telefone, end_postal, pais_residenc
 ('lei_wu', 'lei99@email.com', '1991-08-10', '+86101234599', 'Xinhua Street 9, Hangzhou', 86),
 ('yan_zheng', 'yan100@email.com', '1994-10-06', '+86101234600', 'Wenhua Road 10, Zhengzhou', 86);
 
+-- Cada empresa recebe cadastro nacional em tres paises para gerar massa de dados.
 INSERT INTO EmpresaPais (nro_empresa, ddi_pais, id_nacional)
-SELECT 
+SELECT
     e.nro,
     p.DDI,
     'CNPJ_' || e.nro || '_' || p.DDI
 FROM Empresa e
 CROSS JOIN (
-    SELECT DDI FROM Pais LIMIT 3
-) p
-WHERE e.nro <= 34
-UNION ALL
-SELECT 
-    e.nro,
-    p.DDI,
-    'CNPJ_' || e.nro || '_' || p.DDI
-FROM Empresa e
-CROSS JOIN (
-    SELECT DDI FROM Pais OFFSET 3 LIMIT 3
-) p
-WHERE e.nro > 34 AND e.nro <= 67
-UNION ALL
-SELECT 
-    e.nro,
-    p.DDI,
-    'CNPJ_' || e.nro || '_' || p.DDI
-FROM Empresa e
-CROSS JOIN (
-    SELECT DDI FROM Pais OFFSET 6 LIMIT 3
-) p
-WHERE e.nro > 67;
+    SELECT DDI
+    FROM Pais
+    ORDER BY DDI
+    LIMIT 3
+) p;
