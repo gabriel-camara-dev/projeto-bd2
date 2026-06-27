@@ -1,5 +1,6 @@
 \i /docker-entrypoint-initdb.d/querys/consulta_01.sql
 \i /docker-entrypoint-initdb.d/querys/consulta_02.sql
+\i /docker-entrypoint-initdb.d/querys/consulta_03.sql
 \i /docker-entrypoint-initdb.d/querys/consulta_05.sql
 \i /docker-entrypoint-initdb.d/querys/consulta_06.sql
 \i /docker-entrypoint-initdb.d/querys/consulta_07.sql
