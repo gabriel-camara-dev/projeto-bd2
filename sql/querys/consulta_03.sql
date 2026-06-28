@@ -1,12 +1,11 @@
-CREATE OR REPLACE FUNCTION fn_canais_doacoes(p_canal INT DEFAULT NULL)
-RETURNS TABLE (
-    id_canal INT,
-    canal VARCHAR,
-    qtd_doacoes BIGINT,
-    total_doacoes NUMERIC
-) AS $$
+CREATE OR REPLACE PROCEDURE sp_canais_doacoes(
+    IN p_canal INT,
+    INOUT ref refcursor
+)
+LANGUAGE plpgsql
+AS $$
 BEGIN
-    RETURN QUERY
+    OPEN ref FOR
     SELECT
         v.id_canal,
         v.canal,
@@ -16,4 +15,4 @@ BEGIN
     WHERE (p_canal IS NULL OR v.id_canal = p_canal)
     ORDER BY v.total_doacoes DESC, v.canal;
 END;
-$$ LANGUAGE plpgsql;
+$$;

@@ -13,7 +13,11 @@ O banco foi implementado em PostgreSQL e pode ser executado com Docker Compose.
 
 - `sql/01_tables.sql`: criacao das tabelas, chaves primarias, chaves estrangeiras, `UNIQUE`, `NOT NULL` e `CHECK`.
 - `sql/02_views.sql`: views virtuais e materialized view.
-- `sql/03_functions.sql`: arquivo principal que carrega as functions das consultas.
+- `sql/03_functions.sql`: arquivo principal que carrega as procedures e functions das consultas.
+- `sql/querys/consulta_01.sql`: procedure da consulta 1.
+- `sql/querys/consulta_02.sql`: procedure da consulta 2.
+- `sql/querys/consulta_03.sql`: procedure da consulta 3.
+- `sql/querys/consulta_04.sql`: procedure da consulta 4.
 - `sql/querys/consulta_05.sql`: function da consulta 5.
 - `sql/querys/consulta_06.sql`: function da consulta 6.
 - `sql/querys/consulta_07.sql`: function da consulta 7.
@@ -65,7 +69,18 @@ Dentro do `psql`, execute:
 \i /docker-entrypoint-initdb.d/07_test_queries.sql
 ```
 
-As chamadas de teste usam as functions:
+As chamadas de teste usam procedures com cursor nas consultas 1 a 4 e functions nas consultas 5 a 8.
+
+Exemplos de chamadas com procedure:
+
+```sql
+BEGIN;
+CALL sp_canais_patrocinados_por_empresa(NULL, 'cur_canais_patrocinados');
+FETCH 10 FROM cur_canais_patrocinados;
+COMMIT;
+```
+
+Exemplos de chamadas com function:
 
 ```sql
 SELECT * FROM fn_top_canais_patrocinio(10);
