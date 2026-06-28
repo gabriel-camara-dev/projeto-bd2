@@ -1,0 +1,76 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 4071 >>
+stream
+BT /F2 18 Tf 1 0 0 1 50 790 Tm (Projeto BD2 - Streamers Database) Tj ET
+BT /F2 11 Tf 1 0 0 1 50 766 Tm (Decisoes de projeto e justificativas de design) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 740 Tm (Tecnologia: PostgreSQL executado via Docker Compose.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 723 Tm (Objetivo: modelar uma base relacional para plataformas de streaming, incluindo usuarios,) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 710 Tm (streamers, canais, videos, comentarios, doacoes, inscricoes, patrocinios, empresas, paises e) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 697 Tm (moedas.) Tj ET
+BT /F2 13 Tf 1 0 0 1 50 672 Tm (1. Modelo Relacional) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 654 Tm (O banco foi organizado a partir das principais entidades do dominio de streaming. A) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 641 Tm (separacao entre usuarios, plataformas, canais, videos, comentarios, doacoes, inscricoes e) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 628 Tm (patrocinios reduz redundancia e deixa os relacionamentos explicitos.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 611 Tm (Tabelas associativas como PlataformaUsuario, StreamerPais, EmpresaPais e Participa) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 598 Tm (representam relacionamentos muitos-para-muitos.) Tj ET
+BT /F2 13 Tf 1 0 0 1 50 573 Tm (2. Restricoes de Integridade) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 555 Tm (Foram usadas chaves primarias, chaves estrangeiras, UNIQUE, NOT NULL e CHECK para garantir) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 542 Tm (consistencia. Exemplos incluem o tipo do canal, o nivel da inscricao e os status possiveis) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 529 Tm (de uma doacao.) Tj ET
+BT /F2 13 Tf 1 0 0 1 50 504 Tm (3. Views e Materialized View) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 486 Tm (As views centralizam calculos recorrentes, como receita de patrocinio, receita de membros,) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 473 Tm (doacoes por canal e doacoes por video.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 456 Tm (A materialized view mv_faturamento_total_canal consolida patrocinios, membros e doacoes para) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 443 Tm (apoiar a consulta de faturamento total dos canais.) Tj ET
+BT /F2 13 Tf 1 0 0 1 50 418 Tm (4. Consultas, Functions e Procedure) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 400 Tm (As consultas foram implementadas principalmente como functions que retornam tabelas. A) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 387 Tm (consulta 4 foi implementada como procedure com cursor.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 370 Tm (Consulta 1: canais patrocinados por empresa. Consulta 2: gasto mensal dos membros com) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 357 Tm (inscricoes. Consulta 3: canais com doacoes recebidas. Consulta 4: doacoes lidas por video.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 344 Tm (Consultas 5 a 8: rankings de patrocinio, membros, doacoes e faturamento total.) Tj ET
+BT /F2 13 Tf 1 0 0 1 50 319 Tm (5. Triggers) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 301 Tm (Os triggers mantem automaticamente dados derivados: quantidade de usuarios por plataforma,) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 288 Tm (quantidade de videos por canal e total de visualizacoes por canal.) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 271 Tm (A justificativa e evitar inconsistencias entre os totais armazenados e as tabelas de origem.) Tj ET
+BT /F2 13 Tf 1 0 0 1 50 246 Tm (6. Indices) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 228 Tm (Foram criados indices para apoiar filtros, juncoes e agregacoes usadas pelas consultas,) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 215 Tm (especialmente sobre videos, comentarios, doacoes, patrocinios e inscricoes.) Tj ET
+BT /F2 13 Tf 1 0 0 1 50 190 Tm (7. Carga de Dados e Testes) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 172 Tm (A carga de dados foi separada por tema e centralizada no arquivo 06_seed.sql. O arquivo) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 159 Tm (07_test_queries.sql reune chamadas para as oito consultas implementadas.) Tj ET
+BT /F2 13 Tf 1 0 0 1 50 134 Tm (8. Organizacao da Entrega) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 116 Tm (Os arquivos foram separados em DDL, views, funcoes, triggers, indices, dados de insercao e) Tj ET
+BT /F1 10 Tf 1 0 0 1 50 103 Tm (testes. O uso de Docker Compose permite recriar o banco do zero de forma reproduzivel.) Tj ET
+
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000212 00000 n 
+0000000314 00000 n 
+0000000450 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+4573
+%%EOF
